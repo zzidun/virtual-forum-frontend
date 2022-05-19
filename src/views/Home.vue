@@ -7,88 +7,88 @@
             <div>
             <table cellspacing="0" cellpadding="0" width = "100%">
               <tr :height = "rowHeight">
-                <td :height = "rowHeight">
-                  <CategoryBlock name="板块1">
+                <td :height = "rowHeight" :width = "colWidth">
+                  <CategoryBlock name="板块1" categoryer="zzidun" speak="100" follow="100">
                   </CategoryBlock>
                 </td>
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块2" >
                   </CategoryBlock>
                 </td>
               </tr>
 
               <tr :height = "rowHeight">
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块3">
                   </CategoryBlock>
                 </td>
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块4" >
                   </CategoryBlock>
                 </td>
               </tr>
 
               <tr :height = "rowHeight">
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块5">
                   </CategoryBlock>
                 </td>
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块6" >
                   </CategoryBlock>
                 </td>
               </tr>
 
               <tr :height = "rowHeight">
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块7">
                   </CategoryBlock>
                 </td>
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块8" >
                   </CategoryBlock>
                 </td>
               </tr>
 
               <tr :height = "rowHeight">
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块1">
                   </CategoryBlock>
                 </td>
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块2" >
                   </CategoryBlock>
                 </td>
               </tr>
 
               <tr :height = "rowHeight">
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块3">
                   </CategoryBlock>
                 </td>
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块4" >
                   </CategoryBlock>
                 </td>
               </tr>
 
               <tr :height = "rowHeight">
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块5">
                   </CategoryBlock>
                 </td>
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块6" >
                   </CategoryBlock>
                 </td>
               </tr>
 
               <tr :height = "rowHeight">
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块7">
                   </CategoryBlock>
                 </td>
-                <td :height = "rowHeight">
+                <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock name="板块8" >
                   </CategoryBlock>
                 </td>
@@ -132,7 +132,9 @@ import CategoryBlock from "@/components/category/block.vue"
       rowHeight: function() {
         return (window.innerWidth) / 6 + 'px';
       },
-
+      colWidth: function() {
+        return (window.innerWidth) / 4 + 'px'
+      }
     }
     
   }
