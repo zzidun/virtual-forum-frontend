@@ -12,29 +12,24 @@ const routes = [
     component: ()=>import('@/views/Home.vue')
   },
   {
+    path: '/user-login',
+    name: 'UserLogin',
+    component: ()=>import('@/views/user/login.vue')
+  },
+  {
+    path: '/user-register',
+    name: 'UserRegister',
+    component: ()=>import('@/views/user/register.vue')
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: ()=>import('@/views/user/user.vue')
+  },
+  {
     path: '/news',
     name: 'News',
-    component: ()=>import('@/views/News.vue')
-  },
-  {
-    path: '/categorys',
-    name: 'Categorys',
-    component: ()=>import('@/views/Categorys.vue')
-  },
-  {
-    path: '/category',
-    name: 'Category',
-    component: ()=>import('@/views/Category.vue')
-  },
-  {
-    path: '/article',
-    name: 'Article',
-    component: ()=>import('@/views/Article.vue')
-  },
-  {
-    path: '/article_edit',
-    name: 'Article_Edit',
-    component: ()=>import('@/views/Article_Edit.vue')
+    component: ()=>import('@/views/User_Login.vue')
   },
   {
     path: '/about',

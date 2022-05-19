@@ -1,48 +1,145 @@
 <template>
-  <el-container class="home">
-    <el-row>
-      <el-col :span="24">
-        <div>
-          <h1 id="home-title">
-            Virutal Forum
-          </h1>
-        </div>
-      </el-col>
+    <table cellspacing="0" cellpadding="0" :height = "tableHeight" :width = "tableWidth">
+      <tr>
+        <td class="aside grid"></td>
+        <td class="main grid" valign="top">
+          <div>
+            <div>
+            <table cellspacing="0" cellpadding="0" width = "100%">
+              <tr :height = "rowHeight">
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块1">
+                  </CategoryBlock>
+                </td>
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块2" >
+                  </CategoryBlock>
+                </td>
+              </tr>
 
-      <el-col :span="24">
-        <div>
-          <p id="home-intro">
-            虽然这里有一块空白,应该写一些东西在这里,比如说介绍一下这个网站.
-            <br/>
-            但是我不知道该写些啥东西.
-            <br/>
-            所以就这样空着吧
-          </p>
-        </div>
-      </el-col>
-    </el-row>
-  </el-container>
+              <tr :height = "rowHeight">
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块3">
+                  </CategoryBlock>
+                </td>
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块4" >
+                  </CategoryBlock>
+                </td>
+              </tr>
+
+              <tr :height = "rowHeight">
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块5">
+                  </CategoryBlock>
+                </td>
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块6" >
+                  </CategoryBlock>
+                </td>
+              </tr>
+
+              <tr :height = "rowHeight">
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块7">
+                  </CategoryBlock>
+                </td>
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块8" >
+                  </CategoryBlock>
+                </td>
+              </tr>
+
+              <tr :height = "rowHeight">
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块1">
+                  </CategoryBlock>
+                </td>
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块2" >
+                  </CategoryBlock>
+                </td>
+              </tr>
+
+              <tr :height = "rowHeight">
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块3">
+                  </CategoryBlock>
+                </td>
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块4" >
+                  </CategoryBlock>
+                </td>
+              </tr>
+
+              <tr :height = "rowHeight">
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块5">
+                  </CategoryBlock>
+                </td>
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块6" >
+                  </CategoryBlock>
+                </td>
+              </tr>
+
+              <tr :height = "rowHeight">
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块7">
+                  </CategoryBlock>
+                </td>
+                <td :height = "rowHeight">
+                  <CategoryBlock name="板块8" >
+                  </CategoryBlock>
+                </td>
+              </tr>
+            </table> 
+            </div>
+
+            <div class="block" align="center">
+              <el-pagination
+                layout="prev, pager, next"
+                :total="16"
+                :page-size="16">
+              </el-pagination>
+            </div>
+
+          </div>
+
+          
+          
+        </td>
+        <td class="aside grid"></td>
+      </tr>
+    </table> 
 </template>
 
 <script>
-// @ is an alias to /src
+import CategoryBlock from "@/components/category/block.vue"
+  export default {
+    components: {
+      CategoryBlock
+    },
+    methods: {
+    },
+    computed: {
+      tableHeight: function() {
+        return (window.innerHeight) + 'px';
+      },
+      tableWidth: function() {
+        return (window.innerWidth) + 'px';
+      },
+      rowHeight: function() {
+        return (window.innerWidth) / 6 + 'px';
+      },
 
-export default {
-  name: 'Home',
-  components: {
+    }
     
   }
-}
+  
 </script>
 
 <style>
-#home-title {
-  font-size:64px;
-}
-#home-intro {
-  font-size:28px;
-}
-.home {
-  background-color: #fafafa;
-}
+
+
 </style>

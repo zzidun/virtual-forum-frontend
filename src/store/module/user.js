@@ -1,5 +1,5 @@
 import storage_service from "@/service/storage_service"
-import user_service from '@/service/user_service'
+import userService from '@/service/user_service'
 
 const user_store = {
     namespaced: true,
@@ -26,16 +26,16 @@ const user_store = {
     },
 
     actions: {
-        login(context, {email, password}) {
+        login(context, {name, password}) {
             return new Promise((resolve, reject) => {
-                user_service.login({email, password}).then((res) => {
+                userService.login({name, password}).then((res) => {
                     // 提交用户信息
-                    context.commit('SET_TOKEN', res.data.data.token)
+                    context.commit('SET_TOKEN', res.data.token)
                     // 请求用户信息
-                    return user_service.info();
+                    return;
                 }).then((res) => {
                     // 保存用户信息
-                    context.commit('SET_USER_INFO', res.data.data.user);
+                    // context.commit('SET_USER_INFO', res.data.data.user);
                     // 继续
                     resolve(res)
                 }).catch((err) => {
@@ -43,16 +43,16 @@ const user_store = {
                 })
             })
         },
-        register(context, {name, email, password}) {
+        register(context, {name, email, password, confirm}) {
             return new Promise((resolve, reject) => {
-                user_service.register({name, email, password}).then((res) => {
+                userService.register({name, email, password}).then(() => {
                     // 提交用户信息
-                    context.commit('SET_TOKEN', res.data.data.token)
+                    // context.commit('SET_TOKEN', res.data.data.token)
                     // 请求用户信息
-                    return user_service.info();
+                    return userService.info();
                 }).then((res) => {
                     // 保存用户信息
-                    context.commit('SET_USER_INFO', res.data.data.user);
+                    // context.commit('SET_USER_INFO', res.data.data.user);
                     // 继续
                     resolve(res)
                 }).catch((err) => {

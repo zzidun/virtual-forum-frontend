@@ -1,12 +1,13 @@
 import request from "@/utils/request";
 
-// 用户注册
-const login = ({email, password}) => {
-    return request.post('user/login', {email, password})
+// 用户登陆
+const login = ({name, password}) => {
+    return request.post('login', {name, password})
 }
 
+// 用户注册
 const register = ({name, email, password}) => {
-    return request.post('user/register', {name, email, password})
+    return request.post('register', {name, email, password})
 }
 
 // 获取用户信息

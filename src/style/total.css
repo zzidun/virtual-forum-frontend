@@ -1,0 +1,12 @@
+.aside {
+    min-width:10%;
+    min-height:100%
+}
+.main {
+    min-width:80%;
+    min-height:100%
+}
+
+.grid {
+    border:1px solid #000;
+}

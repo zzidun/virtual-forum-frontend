@@ -1,20 +1,19 @@
 <template>
   <div id="app">
-    <navbar/>
-      <el-container>
-        <router-view/>
-      </el-container>
+    <UserBar/>
+    <router-view >
+
+    </router-view>
   </div>
 </template>
 
 <script>
-  import Navbar from './views/Navbar.vue'
-
+import UserBar from "@/components/user/bar.vue"
   export default ({
-    components : { Navbar },
-    setup() {
-    
+    components: {
+      UserBar
     },
+    name: "App"
   })
 </script>
 
