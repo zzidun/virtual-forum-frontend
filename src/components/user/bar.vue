@@ -2,6 +2,7 @@
   <div class="user_bar">
     <div>
         <a href="/" class = "item" style="float:left">主页</a>
+        <a href="/categorys" class = "item" style="float:left">版块</a>
     </div>
     <div v-show="!isLogin" align="right"> 
         <a href="user-login" class = "item">登陆</a>

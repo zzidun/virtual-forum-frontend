@@ -3,111 +3,7 @@
       <tr>
         <td class="aside grid"></td>
         <td class="main grid" valign="top">
-          <div>
-            <div>
-            <table cellspacing="0" cellpadding="0" width = "100%">
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块1" categoryer="zzidun" speak="100" follow="100">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块2" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块3">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块4" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块5">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块6" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块7">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块8" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块1">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块2" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块3">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块4" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块5">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块6" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块7">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块8" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-            </table> 
-            </div>
-
-            <div class="block" align="center">
-              <el-pagination
-                layout="prev, pager, next"
-                :total="16"
-                :page-size="16">
-              </el-pagination>
-            </div>
-
-          </div>
-
-          
-          
+          <markdown-it-vue class="md-body" :content="content" />
         </td>
         <td class="aside grid"></td>
       </tr>
@@ -115,10 +11,16 @@
 </template>
 
 <script>
-import CategoryBlock from "@/components/category/block.vue"
+import MarkdownItVue from 'markdown-it-vue'
+import 'markdown-it-vue/dist/markdown-it-vue.css'
   export default {
     components: {
-      CategoryBlock
+      MarkdownItVue
+    },
+    data() {
+      return {
+        content: '# your markdown content'
+      }
     },
     methods: {
     },
@@ -128,12 +30,6 @@ import CategoryBlock from "@/components/category/block.vue"
       },
       tableWidth: function() {
         return (window.innerWidth) + 'px';
-      },
-      rowHeight: function() {
-        return (window.innerWidth) / 6 + 'px';
-      },
-      colWidth: function() {
-        return (window.innerWidth) / 4 + 'px'
       }
     }
     
