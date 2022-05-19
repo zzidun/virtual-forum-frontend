@@ -1,29 +1,30 @@
 <template>
     <table cellspacing="0" cellpadding="0" :height = "tableHeight" :width = "tableWidth">
     <tr>
-        <td class="aside"></td>
-        <td class="main">
-          <el-form :model="registerForm" :rules="rules" ref="loginForm" label-width="100px" >
-          <el-form-item label="用户名" prop="name">
-            <el-input v-model="registerForm.name"></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model="registerForm.email"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input  type="password" v-model="registerForm.password"></el-input>
-          </el-form-item>
-          <el-form-item label="确认密码" prop="confirm">
-            <el-input  type="password" v-model="registerForm.confirm"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="register('registerForm')">注册</el-button>
-            <el-button type="primary" @click="toLogin()">登陆</el-button>
-          </el-form-item>
-          </el-form>
-
+        <td class="aside gird"></td>
+        <td class="main grid">
+            <div class="form-div">
+            <el-form :model="registerForm" :rules="rules" ref="loginForm" label-width="100px" >
+            <el-form-item label="用户名" prop="name">
+                <el-input v-model="registerForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+                <el-input v-model="registerForm.email"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+                <el-input  type="password" v-model="registerForm.password"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="confirm">
+                <el-input  type="password" v-model="registerForm.confirm"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="register('registerForm')">注册</el-button>
+                <el-button type="primary" @click="toLogin()">登陆</el-button>
+            </el-form-item>
+            </el-form>
+            </div>
         </td>
-        <td class="aside"></td>
+        <td class="aside gird"></td>
     </tr>
     </table> 
 </template>
@@ -120,5 +121,11 @@
 </script>
 
 <style>
-
+.form-div {
+  padding-left: 30%;
+  padding-right: 30%;
+}
+.gird {
+    border: 2px  solid #000;
+}
 </style>

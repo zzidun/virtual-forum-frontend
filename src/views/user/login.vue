@@ -1,23 +1,24 @@
 <template>
     <table cellspacing="0" cellpadding="0" :height = "tableHeight" :width = "tableWidth">
     <tr>
-        <td class="aside"></td>
-        <td class="main">
-          <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="100px" >
-          <el-form-item label="用户名" prop="name">
-            <el-input v-model="loginForm.name"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="loginForm.password"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="login">登陆</el-button>
-            <el-button type="primary" @click="toRegister">注册</el-button>
-          </el-form-item>
-          </el-form>
-
+        <td class="aside" grid></td>
+        <td class="main gird" align="center">
+          <div class = "form-div">
+            <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="100px">
+            <el-form-item label="用户名" prop="name">
+              <el-input v-model="loginForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input type="password" v-model="loginForm.password"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="login">登陆</el-button>
+              <el-button type="primary" @click="toRegister">注册</el-button>
+            </el-form-item>
+            </el-form>
+          </div>
         </td>
-        <td class="aside"></td>
+        <td class="aside grid" ></td>
     </tr>
     </table> 
 </template>
@@ -95,4 +96,11 @@
 </script>
 
 <style>
+.form-div {
+  padding-left: 30%;
+  padding-right: 30%;
+}
+.gird {
+    border: 2px  solid #000;
+}
 </style>

@@ -1,13 +1,15 @@
 <template>
-
-  <div class="user_bar grid" align="right">
-    <div v-show="!isLogin"> 
-      <el-link href="user-login" class = "item">登陆</el-link>
-      <el-link href="user-register" class = "item">注册</el-link>
+  <div class="user_bar">
+    <div>
+        <a href="/" class = "item" style="float:left">主页</a>
     </div>
-    <div v-show="isLogin">
-        <el-link href="user" class = "item">{{ userName }}</el-link>
-        <el-link href="" class = "item" @click="logout">登出</el-link>
+    <div v-show="!isLogin" align="right"> 
+        <a href="user-login" class = "item">登陆</a>
+        <a href="user-register" class = "item">注册</a>
+    </div>
+    <div v-show="isLogin"  align="right">
+        <a href="user" class = "item">{{ userName }}</a>
+        <a href="/" class = "item" @click="logout">登出</a>
     </div>
   </div>
 </template>
@@ -37,14 +39,18 @@ export default {
 
 <style>
 .user_bar {
-    background-color : white;
+    background-color : #EE0000;
     z-index: 10005;
     position: float;
     width : 100%;
     top : 2px;
+    border:1px solid #000;
 }
 .item {
+    color: white;
+    font-weight:bold;
     margin-right:10px;
     margin-left:10px;
+    text-decoration:none;
 }
 </style>
