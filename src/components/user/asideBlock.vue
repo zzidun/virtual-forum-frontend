@@ -2,13 +2,16 @@
   <el-container class="user-block grid">
     <el-main>
         <div>
-            <a class = "text user-name" href="/user/:id" target="_blank" >{{name}}</a>
+            <a class = "text user-name" :href="`/user/`+id" target="_blank" >zzidun</a><br/>
         </div>
     </el-main>
     <el-footer>
         <div class = "desc-number">
             <span class="user-color"  :style="{backgroundColor : speakColor}"></span>
-            <span class="speak text">发言数量: {{speak}}</span><br/>
+            <span class="speak text">发言数量: {{speak}}</span>
+            <br/>
+            <span class="user-color"  :style="{backgroundColor : countColor}"></span>
+            <span class="speak text">版块积分: {{count}}</span>
         </div>
     </el-footer>
     
@@ -17,17 +20,19 @@
 
 <script>
 export default {
-  name: 'CategoryBlock',
+  name: 'UserAsideBlock',
   props: {
     id : String,
     name : String,
     speak : String,
-    follow : String,
-    categoryer : String,
+    count : String,
   },
   computed : {
     speakColor() {
-        return this.getColor(this.speak, 100);
+        return this.getColor(this.speak, 10);
+    },
+    countColor() {
+        return this.getColor(this.count, 10);
     },
   }
 }
@@ -39,7 +44,7 @@ export default {
     width : 100%
 }
 
-.category-color {
+.user-color {
     position: relative;
     top: 1px;
     display: inline-block;
@@ -54,16 +59,14 @@ export default {
     margin-left:10px;
 }
 
-.category-name {
-    font-size: 36px;
+.user-name {
+    font-size: 24px;
     font-weight:bold;
     text-decoration:none;
 }
 
-.categoryer-name {
-    font-weight:bold;
-    text-decoration:none;
+.grid {
+    border:1px solid #000;
 }
-
 
 </style>

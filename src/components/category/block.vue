@@ -2,8 +2,9 @@
   <el-container class="category-block grid">
     <el-header>
         <div>
-            <a class = "text category-name" href="/category/:id" target="_blank" >{{name}}</a>
-            <a class = "text categoryer-name" href="/user/:id"  target="_blank" >版主: {{categoryer}}</a>
+            <a class = "text category-name" :href="`/category/`+id" target="_blank" >{{name}}</a>
+            <br/>
+            <span class = "text categoryer-name" >版主: {{categoryer}}</span>
         </div>
 
     </el-header>
@@ -12,7 +13,8 @@
     <el-footer>
         <div class = "desc-number">
             <span class="category-color"  :style="{backgroundColor : speakColor}"></span>
-            <span class="speak text">发言数量: {{speak}}</span><br/>
+            <span class="speak text">发言数量: {{speak}}</span>
+            <br/>
             <span class="category-color"  :style="{backgroundColor : followColor}"></span>
             <span class="follow text">关注人数: {{follow}}</span>
         </div>
@@ -29,7 +31,7 @@ export default {
     name : String,
     speak : String,
     follow : String,
-    categoryer : String,
+    categoryer : String
   },
   computed : {
     speakColor() {

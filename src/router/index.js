@@ -30,6 +30,11 @@ const routes = [
     name: 'Categorys',
     component: ()=>import('@/views/category/categorys.vue')
   },
+  {
+    path: '/category/:id',
+    name: 'Category',
+    component: ()=>import('@/views/category/category.vue')
+  },
 ]
 
 const router = new VueRouter({
@@ -45,7 +50,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.user_store.token) {
       next()
     } else {
-      router.push({name : 'User_Login'});
+      router.push({name : '/user-login'});
     }
   } else {
     next();

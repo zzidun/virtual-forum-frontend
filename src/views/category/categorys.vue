@@ -5,25 +5,37 @@
         <td class="main grid" valign="top">
           <div>
             <div>
-            <table cellspacing="0" cellpadding="0" width = "100%">
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="图拉丁" categoryer="zzidun" speak="100" follow="1">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="论坛反馈" categoryer="zzidun" speak="0" follow="0" >
-                  </CategoryBlock>
-                </td>
-              </tr>
 
+            <table cellspacing="0" cellpadding="0" width = "100%">
+              <tr v-for="(category1, category2) in categoryList" :key="category1.id">
+                <td :height = "rowHeight" :width = "colWidth">
+                  <CategoryBlock
+                    :id="category1.id"
+                    :name="category1.name"
+                    :categoryer="category1.categoryer"
+                    :speak="category1.speak"
+                    :follow="category1.follow">
+                  </CategoryBlock>
+                </td>
+
+                <td :height = "rowHeight" :width = "colWidth">
+                  <CategoryBlock v-if="!category2.id == 0"
+                    :id="category2.id"
+                    :name="category2.name"
+                    :categoryer="category2.categoryer"
+                    :speak="category2.speak"
+                    :follow="category2.follow">
+                  </CategoryBlock>
+                </td>
+
+              </tr>
             </table> 
             </div>
 
             <div class="block" align="center">
               <el-pagination
                 layout="prev, pager, next"
-                :total="16"
+                :total="categoryTot"
                 :page-size="16">
               </el-pagination>
             </div>
@@ -45,7 +57,41 @@ import CategoryBlock from "@/components/category/block.vue"
     components: {
       CategoryBlock
     },
+    data() {
+      return {
+        categoryTot : 0,
+        categoryCur : 16,
+        categoryList: []
+      }
+    },
+    mounted: function() {
+      this.getCategoryList()
+    },
     methods: {
+      pageSwitch() {
+
+      },
+      getCategoryList() {
+        this.$axios({
+          method: "get",
+          url: "/categories",
+          params: {
+            left: 0,
+            right: 15,
+          }
+        }).then(res => {
+          console.log(res.data, 222);
+          if (res.code == 1000) {
+            this.categoryTot = Number(res.data.tot);
+            this.categoryCur = Number(res.data.cur);
+            this.categoryList = res.data.list;
+          } else {
+            console.log(res.msg);
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
     },
     computed: {
       tableHeight: function() {

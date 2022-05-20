@@ -19,7 +19,7 @@ import 'markdown-it-vue/dist/markdown-it-vue.css'
     },
     data() {
       return {
-        about: ' 静态数据 '
+        about: ''
       }
     },
     created() {
