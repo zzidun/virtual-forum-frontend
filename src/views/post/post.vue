@@ -71,7 +71,7 @@
 <script>
 import PostBlock from "@/components/post/block.vue"
   export default {
-    name: "Category",
+    name: "Post",
     components: {
       PostBlock
     },

@@ -35,6 +35,11 @@ const routes = [
     name: 'Category',
     component: ()=>import('@/views/category/category.vue')
   },
+  {
+    path: '/post/:id',
+    name: 'Post',
+    component: ()=>import('@/views/post/post.vue')
+  },
 ]
 
 const router = new VueRouter({

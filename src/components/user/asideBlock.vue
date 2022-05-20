@@ -2,16 +2,16 @@
   <el-container class="user-block grid">
     <el-main>
         <div>
-            <a class = "text user-name" :href="`/user/`+id" target="_blank" >zzidun</a><br/>
+            <a class = "text user-name" :href="`/user/`+userId" target="_blank" >{{userName}}</a><br/>
         </div>
     </el-main>
     <el-footer>
         <div class = "desc-number">
             <span class="user-color"  :style="{backgroundColor : speakColor}"></span>
-            <span class="speak text">发言数量: {{speak}}</span>
+            <span class="speak text">发言数量: {{userSpeak}}</span>
             <br/>
             <span class="user-color"  :style="{backgroundColor : countColor}"></span>
-            <span class="speak text">版块积分: {{count}}</span>
+            <span class="speak text">版块积分: {{userCount}}</span>
         </div>
     </el-footer>
     
@@ -22,18 +22,21 @@
 export default {
   name: 'UserAsideBlock',
   props: {
-    id : String,
-    name : String,
-    speak : String,
-    count : String,
+    userId : String,
+    userName : String,
+    userSpeak : String,
+    userCount : String,
   },
   computed : {
     speakColor() {
-        return this.getColor(this.speak, 10);
+        return this.getColor(this.userSpeak, 10);
     },
     countColor() {
-        return this.getColor(this.count, 10);
+        return this.getColor(this.userCount, 10);
     },
+    log() {
+        console.log(this.userName)
+    }
   }
 }
 </script>
