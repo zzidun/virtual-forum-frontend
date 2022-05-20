@@ -8,91 +8,15 @@
             <table cellspacing="0" cellpadding="0" width = "100%">
               <tr :height = "rowHeight">
                 <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块1" categoryer="zzidun" speak="100" follow="100">
+                  <CategoryBlock name="图拉丁" categoryer="zzidun" speak="100" follow="1">
                   </CategoryBlock>
                 </td>
                 <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块2" >
+                  <CategoryBlock name="论坛反馈" categoryer="zzidun" speak="0" follow="0" >
                   </CategoryBlock>
                 </td>
               </tr>
 
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块3">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块4" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块5">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块6" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块7">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块8" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块1">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块2" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块3">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块4" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块5">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块6" >
-                  </CategoryBlock>
-                </td>
-              </tr>
-
-              <tr :height = "rowHeight">
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块7">
-                  </CategoryBlock>
-                </td>
-                <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock name="板块8" >
-                  </CategoryBlock>
-                </td>
-              </tr>
             </table> 
             </div>
 

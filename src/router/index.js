@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import user_router from '@/router/module/user'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -31,12 +30,6 @@ const routes = [
     name: 'Categorys',
     component: ()=>import('@/views/category/categorys.vue')
   },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
-  },
-  ...user_router
 ]
 
 const router = new VueRouter({

@@ -1,14 +1,23 @@
 <template>
   <el-container class="category-block grid">
-    <div>
-        <a>{{name}}</a>
-        <a>{{categoryer}}</a>
-    </div>
-    <div>
-        <span class="category-color zero" ></span>
-        <a>{{speak}}</a>
-        <a>{{follow}}</a>
-    </div>
+    <el-header>
+        <div>
+            <a class = "text category-name" href="/category/:id" target="_blank" >{{name}}</a>
+            <a class = "text categoryer-name" href="/user/:id"  target="_blank" >版主: {{categoryer}}</a>
+        </div>
+
+    </el-header>
+    <el-main>
+    </el-main>
+    <el-footer>
+        <div class = "desc-number">
+            <span class="category-color"  :style="{backgroundColor : speakColor}"></span>
+            <span class="speak text">发言数量: {{speak}}</span><br/>
+            <span class="category-color"  :style="{backgroundColor : followColor}"></span>
+            <span class="follow text">关注人数: {{follow}}</span>
+        </div>
+    </el-footer>
+    
   </el-container>
 </template>
 
@@ -21,6 +30,14 @@ export default {
     speak : String,
     follow : String,
     categoryer : String,
+  },
+  computed : {
+    speakColor() {
+        return this.getColor(this.speak, 100);
+    },
+    followColor() {
+        return this.getColor(this.follow, 30);
+    }
   }
 }
 </script>
@@ -30,25 +47,6 @@ export default {
     height : 100%;
     width : 100%
 }
-.six {
-    background-color : #FF0000
-}
-.five {
-    background-color : #FF7F00
-}
-.four {
-    background-color : #8B00FF
-}
-.three {
-    background-color: #0000FF;
-}
-.one {
-    background-color : #00FFFF 
-}
-.zero {
-    background-color : #00FF00 
-}
-
 
 .category-color {
     position: relative;
@@ -59,4 +57,22 @@ export default {
     border: 1px solid var(--color-primer-border-contrast);
     border-radius: 50%;
 }
+
+.text{
+    margin-right:10px;
+    margin-left:10px;
+}
+
+.category-name {
+    font-size: 36px;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.categoryer-name {
+    font-weight:bold;
+    text-decoration:none;
+}
+
+
 </style>

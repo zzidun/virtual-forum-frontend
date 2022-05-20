@@ -18,9 +18,9 @@
 
 <script>
 export default {
-  name: 'Comment',
+  name: 'CommentBlock',
   props: {
-    user_name : String,
+    name : String,
     count : String,
     context : String,
   }

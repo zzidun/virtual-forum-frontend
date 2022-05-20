@@ -10,6 +10,23 @@ import axios from './service/api'
 import './style/total.css'
 
 Vue.prototype.$axios = axios;
+Vue.prototype.getColor = function (count, base) {
+  var countNum = Number(count)
+  if (countNum < base * 1) {
+      return "#00FF00"
+  } else if (countNum < base * 2) {
+      return "#00FFFF"
+  } else if (countNum < base * 4) {
+      return "#0000FF"
+  } else if (countNum < base * 8) {
+      return "#8B00FF"
+  } else if (countNum < base * 16) {
+      return "#FF7F00"
+  } else {
+      return "#FF0000"
+  }
+}
+
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = "http://127.0.0.1:8089";
