@@ -9,7 +9,7 @@
                 <el-container class="user-block grid">
                 <el-main>
                     <div align="center">
-                        <a class = "text page-name" :href="'/post/'+postId" >封禁列表</a>
+                        <span class = "text page-name" >封禁列表</span>
                     </div>
                 </el-main>
                 </el-container>

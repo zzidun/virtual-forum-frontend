@@ -9,7 +9,7 @@
                 <el-container class="user-block grid">
                 <el-main>
                     <div align="center">
-                        <a class = "text page-name" >版块列表</a>
+                        <span class = "text page-name" >版块列表</span>
                     </div>
                 </el-main>
                 </el-container>

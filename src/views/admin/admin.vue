@@ -9,7 +9,7 @@
                 <el-container class="user-block grid">
                 <el-main>
                     <div align="center">
-                        <a class = "text page-name" :href="'/post/'+postId" >管理员列表</a>
+                        <span class = "text page-name" >管理员列表</span>
                     </div>
                 </el-main>
                 </el-container>
@@ -20,7 +20,7 @@
 
                 <el-dialog title="新建管理员" :visible.sync="createAdminVisible">
                     <el-form :model="adminForm">
-                        <el-form-item label="成为新管理员的用户id" :label-width="formLabelWidth">
+                        <el-form-item label="成为新管理员的用户id">
                             <el-input v-model="adminForm.userId" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-form>
@@ -38,12 +38,13 @@
               <tr v-for="(admin, i) in adminList" :key="i">
                 <td :width = "colWidth">
                   <AdminBlock
-                    :UserId="admin.userid"
-                    :UserName="admin.username"
-                    :AdminId="admin.adminid"
-                    :AdminPerm="admin.adminperm"
-                    :BanPerm="admin.banperm"
-                    :CategoryPerm="admin.categoryperm"
+                    :userId="admin.userid"
+                    :userName="admin.username"
+                    :adminId="admin.adminid"
+                    :adminPerm="admin.adminperm"
+                    :banPerm="admin.banperm"
+                    :categoryPerm="admin.categoryperm"
+                    :refreshList="refreshList"
                     >
                   </AdminBlock>
                 </td>
