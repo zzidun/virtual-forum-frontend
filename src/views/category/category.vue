@@ -9,7 +9,7 @@
                 <el-container class="user-block grid">
                 <el-main>
                     <div align="center">
-                        <a class = "text category-name" :href="'/category/'+id" >{{categoryName}}</a>
+                        <a class = "text category-name" :href="'/category/'+categoryId" >{{categoryName}}</a>
                     </div>
                 </el-main>
                 <el-footer>
@@ -25,37 +25,49 @@
             </div>
 
             <div class="browse-bar">
-                <a href="'/category/'+id" class = "category-item text">看贴</a>
+                <a href="'/category/'+categoryId" class = "category-item text">看贴</a>
                 <a href="'/post/'+wiki" class = "category-item text">Wiki</a>
-                <a href="" class = "category-item text" style="float:right">发帖</a>
+                <a href="javascript:void(0)" class = "category-item text" style="float:right" @click="dialogFormVisible = true" >发帖</a>
+
+                <el-dialog title="发布新贴" :visible.sync="dialogFormVisible">
+                <el-form :model="postForm">
+                    <el-form-item label="帖子标题" :label-width="formLabelWidth">
+                    <el-input v-model="postForm.title" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="dialogFormVisible = false; submit()">确 定</el-button>
+                </div>
+                </el-dialog>
             </div>
-          <div>
 
 
-            <table cellspacing="0" cellpadding="0" width = "100%">
-              <tr v-for="post in postList" :key="post.id">
-                <td :width = "colWidth">
-                  <PostBlock
-                    :postId="post.id"
-                    :postTitle="post.title"
-                    :postSpeak="post.speak"
-                    :userId="post.user.id"
-                    :userName="post.user.name"
-                    :userSpeak="post.user.speak"
-                    :userCount="post.user.count"
-                    >
-                  </PostBlock>
-                </td>
-              </tr>
-            </table> 
+            <div>
+                <table cellspacing="0" cellpadding="0" width = "100%">
+                <tr v-for="post in postList" :key="post.id">
+                    <td :width = "colWidth">
+                    <PostBlock
+                        :postId="post.id"
+                        :postTitle="post.title"
+                        :postSpeak="post.speak"
+                        :userId="post.user.id"
+                        :userName="post.user.name"
+                        :userSpeak="post.user.speak"
+                        :userCount="post.user.count"
+                        >
+                    </PostBlock>
+                    </td>
+                </tr>
+                </table> 
 
-            <div class="block" align="center">
-                <el-pagination
-                    layout="prev, pager, next"
-                    :total="postTot"
-                    :page-size="16">
-                </el-pagination>
-            </div>
+                <div class="block" align="center">
+                    <el-pagination
+                        layout="prev, pager, next"
+                        :total="postTot"
+                        :page-size="16">
+                    </el-pagination>
+                </div>
             </div>
 
           </div>
@@ -79,6 +91,7 @@ import PostBlock from "@/components/post/block.vue"
     },
     data() {
       return {
+        dialogFormVisible : false,
         categoryId : 0,
         categoryName : "",
         categorySpeak : "0",
@@ -86,7 +99,15 @@ import PostBlock from "@/components/post/block.vue"
         wiki : "",
         postTot : 0,
         postCur : 16,
-        postList: []
+        postList: [],
+        postForm : {
+          title: '',
+        },
+        rules: {
+          title: [
+            { required: true, message: '请输入标题', trigger: 'blur' }
+          ],
+        }
       }
     },
     mounted: function() {
@@ -94,6 +115,34 @@ import PostBlock from "@/components/post/block.vue"
       this.getPostList()
     },
     methods: {
+      submit() {
+        this.$axios({
+          method: "post",
+          url: "/posts",data: JSON.stringify({
+            categoryid: this.categoryId,
+            title: this.postForm.title,
+            userid : this.$store.getters.userID
+          })
+        }).then((res)=>{
+          console.log(res.data)
+          if (res.code == 1000) {
+            const h = this.$createElement;
+            this.$notify({
+                title: '发布成功',
+                message: h('i', { style: 'color: teal'}, '可能需要刷新才出现')
+            });
+          } else {
+            const h = this.$createElement;
+            this.$notify({
+                title: '发布失败',
+                message: h('i', { style: 'color: teal'}, '请检查网络和登陆状态')
+            });
+            console.log(res.msg)
+          }
+        }).catch((error)=>{
+          console.log(error)
+        })
+      },
       getCategory() {
         this.$axios({
           method: "get",

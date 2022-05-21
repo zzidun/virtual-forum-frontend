@@ -1,50 +1,82 @@
 <template>
-  <el-container class="comment">
-    <div class=comment_block>
-    <el-container>
-        <el-aside class="commenter">
-          <a>{{user_name}}</a><br/><br/><br/>
-          <el-link type="primary">回复</el-link></el-aside>
-        <el-container>
-            <el-header>
-              {{count}}
-            </el-header>
-            <el-main>{{context}}</el-main>
-        </el-container>
+  <el-container class="post-block grid">
+    <el-aside width="30%"> 
+        <UserAsideBlock
+        :userId="userId"
+        :userName="userName"
+        :userSpeak="userSpeak"
+        :userCount="userCount">
+
+        </UserAsideBlock>
+    </el-aside>
+
+    <el-container class="gird">
+        <el-main>
+          <markdown-it-vue class="md-body" :content="content" />
+        </el-main>
+
+        <el-footer>
+          <div>
+            <a href="" class = "comment-item text" style="float:right">删除</a>
+          </div>
+        </el-footer>
     </el-container>
-    </div>
   </el-container>
 </template>
 
 <script>
-export default {
-  name: 'CommentBlock',
-  props: {
-    name : String,
-    count : String,
-    context : String,
-  }
-}
+import MarkdownItVue from 'markdown-it-vue'
+import 'markdown-it-vue/dist/markdown-it-vue.css'
+import UserAsideBlock from "@/components/user/asideBlock.vue"
+    export default {
+        name: 'PostBlock',
+        components : {
+            UserAsideBlock,
+            MarkdownItVue
+        },
+        props: {
+            commentId : String,
+            commentContent : String,
+            conmentReply : String,
+            userId : String,
+            userName : String,
+            userSpeak : String,
+            userCount : String,
+        },
+        data() {
+          return {
+            commentId : "",
+            content : this.commentContent,
+            commentContent : "",
+            conmentReply : "",
+            userId : "",
+            userName : "",
+            userSpeak : "",
+            userCount : "",
+          }
+        },
+        computed : {
+        },
+    }
 </script>
 
 <style>
-.comment_block {
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    width: 80%;
-    border: solid 1px #3f3f3f;
+.grid {
+    border:1px solid #000;
 }
-.el-header {
-  height : 20px;
+
+
+.text{
+    margin-right:10px;
+    margin-left:10px;
 }
-.el-aside {
-  max-width: 20%;
+
+.comment-item {
+    color: black;
+    font-weight:bold;
+    margin-right:10px;
+    margin-left:10px;
+    text-decoration:none;
 }
-.commenter {
-  width: 100px;
-  border: solid 1px #3f3f3f;
-  text-align: center;
-}
+
 </style>

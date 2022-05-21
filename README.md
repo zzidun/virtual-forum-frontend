@@ -1,4 +1,4 @@
-# vforum0-vue
+# vforum
 
 ## Project setup
 ```

@@ -9,15 +9,13 @@
                 <el-container class="user-block grid">
                 <el-main>
                     <div align="center">
-                        <a class = "text category-name" :href="'/category/'+id" >{{categoryName}}</a>
+                        <a class = "text post-name" :href="'/post/'+postId" >{{postTitle}}</a>
                     </div>
                 </el-main>
                 <el-footer>
                     <div class = "desc-number" align="center">
                         <span class="user-color"  :style="{backgroundColor : speakColor}"></span>
-                        <span class="speak text">发言数量: {{categorySpeak}}</span>
-                        <span class="user-color"  :style="{backgroundColor : followColor}"></span>
-                        <span class="speak text">关注人数: {{categoryFollow}}</span>
+                        <span class="speak text">回复数量: {{postSpeak}}</span>
                     </div>
                 </el-footer>
                 
@@ -25,37 +23,43 @@
             </div>
 
             <div class="browse-bar">
-                <a href="'/category/'+id" class = "category-item text">看贴</a>
-                <a href="'/post/'+wiki" class = "category-item text">Wiki</a>
-                <a href="" class = "category-item text" style="float:right">发帖</a>
+                <a href="'/post/'+id" class = "post-item text">第一页</a>
+                <a href="" class = "post-item text" style="float:right">删贴</a>
             </div>
           <div>
 
 
             <table cellspacing="0" cellpadding="0" width = "100%">
-              <tr v-for="post in postList" :key="post.id">
+              <tr v-for="comment in commentList" :key="comment.id">
                 <td :width = "colWidth">
-                  <PostBlock
-                    :postId="post.id"
-                    :postTitle="post.title"
-                    :postSpeak="post.speak"
-                    :userId="post.user.id"
-                    :userName="post.user.name"
-                    :userSpeak="post.user.speak"
-                    :userCount="post.user.count"
+                  <CommentBlock
+                    :commentId="comment.id"
+                    :commentContent="comment.content"
+                    :commentReply="comment.replyid"
+                    :userId="comment.user.id"
+                    :userName="comment.user.name"
+                    :userSpeak="comment.user.speak"
+                    :userCount="comment.user.count"
                     >
-                  </PostBlock>
+                  </CommentBlock>
                 </td>
               </tr>
             </table> 
 
-            <div class="block" align="center">
-                <el-pagination
-                    layout="prev, pager, next"
-                    :total="postTot"
-                    :page-size="16">
-                </el-pagination>
+                <div class="block" align="center">
+                    <el-pagination
+                        @current-change="pageChange"
+                        layout="prev, pager, next"
+                        :total="commentTot"
+                        :page-size="16">
+                    </el-pagination>
+                </div>
             </div>
+            
+            <div>
+                <CommentEditor
+                    :postId="postId">
+                </CommentEditor>
             </div>
 
           </div>
@@ -69,43 +73,46 @@
 </template>
 
 <script>
-import PostBlock from "@/components/post/block.vue"
+import CommentBlock from "@/components/comment/block.vue"
+import CommentEditor from '@/components/comment/editor.vue'
   export default {
     name: "Post",
     components: {
-      PostBlock
+        CommentBlock,
+        CommentEditor
     },
     props: {
     },
     data() {
       return {
-        categoryId : 0,
-        categoryName : "",
-        categorySpeak : "0",
-        categoryFollow : "0",
-        wiki : "",
-        postTot : 0,
-        postCur : 16,
-        postList: []
+        curPage : 1,
+        postId : "0",
+        postTitle : "",
+        postSpeak : "0",
+        commentTot : 0,
+        commentCur : 16,
+        commentList: []
       }
     },
     mounted: function() {
-      this.getCategory()
-      this.getPostList()
+      this.getPost()
+      this.getCommentList()
     },
     methods: {
-      getCategory() {
+      pageChange(val) {
+        this.curPage = val;
+        this.getCommentList();
+      },
+      getPost() {
         this.$axios({
           method: "get",
-          url: "/categories/" + this.$route.params.id,
+          url: "/posts/" + this.$route.params.id,
         }).then(res => {
           console.log(res.data, 222);
-          this.categoryId = this.$route.params.id;
+          this.postId = this.$route.params.id;
           if (res.code == 1000) {
-            this.categoryName = res.data.name;
-            this.categorySpeak = res.data.speak;
-            this.categoryFollow = res.data.follow;
-            this.wiki = res.data.wiki;
+            this.postTitle = res.data.title;
+            this.postSpeak = res.data.speak;
           } else {
             console.log(res.msg);
           }
@@ -113,21 +120,21 @@ import PostBlock from "@/components/post/block.vue"
           console.log(err)
         })
       },
-      getPostList() {
+      getCommentList() {
         this.$axios({
           method: "get",
-          url: "/posts",
+          url: "/comments",
           params: {
-            category: this.$route.params.id,
-            left: 0,
-            right: 15,
+            post: this.$route.params.id,
+            left: (this.curPage-1)*16,
+            right: (this.curPage-1)*16 + 15,
           }
         }).then(res => {
           console.log(res.data, 222);
           if (res.code == 1000) {
-            this.postTot = Number(res.data.tot);
-            this.postCur = Number(res.data.cur);
-            this.postList = res.data.list;
+            this.commentTot = Number(res.data.tot);
+            this.commentCur = Number(res.data.cur);
+            this.commentList = res.data.list;
           } else {
             console.log(res.msg);
           }
@@ -147,11 +154,8 @@ import PostBlock from "@/components/post/block.vue"
         return (window.innerWidth) /10 * 8 + 'px'
       },
       speakColor() {
-        return this.getColor(this.categorySpeak, 100);
+        return this.getColor(this.postSpeak, 100);
       },
-      followColor() {
-        return this.getColor(this.categoryFollow, 30);
-      }
     }
     
   }
@@ -164,7 +168,7 @@ import PostBlock from "@/components/post/block.vue"
     margin-left:10px;
 }
 
-.category-name {
+.post-name {
     font-size: 36px;
     font-weight:bold;
     text-decoration:none;
@@ -182,7 +186,7 @@ import PostBlock from "@/components/post/block.vue"
     border:1px solid #000;
     width : 100%;
 }
-.category-item {
+.post-item {
     color: black;
     font-weight:bold;
     margin-right:10px;

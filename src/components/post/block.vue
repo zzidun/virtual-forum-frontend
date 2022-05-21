@@ -40,6 +40,17 @@ import UserAsideBlock from "@/components/user/asideBlock.vue"
             userSpeak : String,
             userCount : String,
         },
+        data() {
+            return {
+                postId : "",
+                postTitle : "",
+                postSpeak : "",
+                userId : "",
+                userName : "",
+                userSpeak : "",
+                userCount : "",
+            };
+        },
         computed : {
             postColor() {
                 return this.getColor(this.postSpeak, 30);

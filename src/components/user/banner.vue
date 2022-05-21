@@ -11,7 +11,14 @@ export default {
     user_name : String,
     count : String,
     context : String,
-  }
+  },
+    data() {
+      return {
+        user_name : "",
+        count : "",
+        context : "",
+      };
+    },
 }
 </script>
 

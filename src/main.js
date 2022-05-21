@@ -9,6 +9,21 @@ import axios from './service/api'
 
 import './style/total.css'
 
+import VMdEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
+import '@kangc/v-md-editor/lib/theme/style/github.css';
+
+// highlightjs
+import hljs from 'highlight.js';
+
+VMdEditor.use(githubTheme, {
+  Hljs: hljs,
+});
+
+Vue.use(VMdEditor);
+
+
 Vue.prototype.$axios = axios;
 Vue.prototype.getColor = function (count, base) {
   var countNum = Number(count)

@@ -27,6 +27,14 @@ export default {
     userSpeak : String,
     userCount : String,
   },
+    data() {
+        return {
+            userId : "",
+            userName : "",
+            userSpeak : "",
+            userCount : "",
+        };
+    },
   computed : {
     speakColor() {
         return this.getColor(this.userSpeak, 10);
@@ -42,9 +50,8 @@ export default {
 </script>
 
 <style>
-.category-block {
+.user-block {
     height : 100%;
-    width : 100%
 }
 
 .user-color {

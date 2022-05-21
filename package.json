@@ -1,5 +1,5 @@
 {
-  "name": "vforum0-vue",
+  "name": "vforum",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@kangc/v-md-editor": "^1.7.11",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.6",

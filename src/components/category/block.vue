@@ -33,6 +33,15 @@ export default {
     follow : String,
     categoryer : String
   },
+  data() {
+    return { 
+        id : "",
+        name : "",
+        speak : "",
+        follow : "",
+        categoryer : "",
+    }
+  },
   computed : {
     speakColor() {
         return this.getColor(this.speak, 100);

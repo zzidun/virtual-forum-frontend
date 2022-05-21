@@ -34,16 +34,13 @@
 
             <div class="block" align="center">
               <el-pagination
+                @current-change="pageChange"
                 layout="prev, pager, next"
                 :total="categoryTot"
                 :page-size="16">
               </el-pagination>
             </div>
-
           </div>
-
-          
-          
         </td>
         <td class="aside grid"></td>
       </tr>
@@ -59,6 +56,7 @@ import CategoryBlock from "@/components/category/block.vue"
     },
     data() {
       return {
+        curPage : 1,
         categoryTot : 0,
         categoryCur : 16,
         categoryList: []
@@ -68,16 +66,17 @@ import CategoryBlock from "@/components/category/block.vue"
       this.getCategoryList()
     },
     methods: {
-      pageSwitch() {
-
+      pageChange(val) {
+        this.curPage = val;
+        this.getCategoryList();
       },
       getCategoryList() {
         this.$axios({
           method: "get",
           url: "/categories",
           params: {
-            left: 0,
-            right: 15,
+            left: (this.curPage-1)*16,
+            right: (this.curPage-1)*16 + 15,
           }
         }).then(res => {
           console.log(res.data, 222);
