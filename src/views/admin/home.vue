@@ -20,31 +20,12 @@ import 'markdown-it-vue/dist/markdown-it-vue.css'
     },
     data() {
       return {
-        about: ''
+        about: '# 管理页面 \r\n 你可以联系管理员为你开通帐号'
       }
     },
     created() {
-      this.getAbout();
     },
     methods: {
-      getAbout() {
-        this.$axios({
-          method: 'get',
-          url:'/about',
-        }).then((res)=>{
-          console.log(res.data)
-          if (res.code == 1000) {
-            this.about = res.data.about
-          }
-        }).catch((error)=>{
-            const h = this.$createElement;
-            this.$notify({
-            title: '网络错误',
-            message: h('i', { style: 'color: teal'}, '请检查网络')
-            });
-          console.log(error)
-        })
-      }
     },
     computed: {
       tableHeight: function() {

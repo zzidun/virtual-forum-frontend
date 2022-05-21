@@ -14,7 +14,6 @@
 import MarkdownItVue from 'markdown-it-vue'
 import 'markdown-it-vue/dist/markdown-it-vue.css'
   export default {
-    name : "Home",
     components: {
       MarkdownItVue
     },

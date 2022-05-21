@@ -40,6 +40,36 @@ const routes = [
     component: ()=>import('@/views/post/post.vue')
   },
   {
+    path : '/admin',
+    name: 'AdminHome',
+    component: ()=>import('@/views/admin/home.vue')
+  },
+  {
+    path : '/admin/login',
+    name: 'AdminLogin',
+    component: ()=>import('@/views/admin/login.vue')
+  },
+  {
+    path : '/admin/admin',
+    name: 'AdminAdmin',
+    component: ()=>import('@/views/admin/admin.vue')
+  },
+  {
+    path : '/admin/category',
+    name: 'AdminCategory',
+    component: ()=>import('@/views/admin/category.vue')
+  },
+  {
+    path : '/admin/secure',
+    name: 'AdminSecure',
+    component: ()=>import('@/views/admin/secure.vue')
+  },
+  {
+    path : '/admin/statistic',
+    name: 'AdminStatistic',
+    component: ()=>import('@/views/admin/statistic.vue')
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: ()=>import('@/views/404.vue')

@@ -1,16 +1,16 @@
 <template>
-  <div class="user_bar">
+  <div class="user-bar">
     <div>
-        <a href="/" class = "item" style="float:left">主页</a>
-        <a href="/categorys" class = "item" style="float:left">版块</a>
+        <a href="/" class = "item" style="float:left;">主页</a>
+        <a href="/categorys" class = "item" style="float:left;">版块</a>
     </div>
     <div v-show="!isLogin" align="right"> 
-        <a href="user-login" class = "item">登陆</a>
-        <a href="user-register" class = "item">注册</a>
+        <a href="user-login" class = "item" style="">登陆</a>
+        <a href="user-register" class = "item" style="">注册</a>
     </div>
     <div v-show="isLogin"  align="right">
-        <a :href="`user/`+userId" class = "item">{{ userName }}</a>
-        <a href="/" class = "item" @click="logout">登出</a>
+        <a :href="`user/`+userId" class = "item" style="">{{ userName }}</a>
+        <a href="/" class = "item" @click="logout" style="">登出</a>
     </div>
   </div>
 </template>
@@ -43,8 +43,8 @@ export default {
 </script>
 
 <style>
-.user_bar {
-    background-color : #EE0000;
+.user-bar {
+    background-color : #FAF0D7;
     z-index: 10005;
     position: float;
     width : 100%;
@@ -52,7 +52,7 @@ export default {
     border:1px solid #000;
 }
 .item {
-    color: white;
+    color: #050F28;
     font-weight:bold;
     margin-right:10px;
     margin-left:10px;
