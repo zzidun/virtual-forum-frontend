@@ -1,17 +1,17 @@
 <template>
   <div class="admin-bar">
     <div>
-        <a href="/" class = "item" style="float:left">主页</a>
-        <a href="/" class = "item" style="float:left">管理员管理</a>
-        <a href="/" class = "item" style="float:left">版块管理</a>
-        <a href="/" class = "item" style="float:left">安全管理</a>
-        <a href="/" class = "item" style="float:left">统计信息</a>
+        <a href="/admin" class = "item" style="float:left">主页</a>
+        <a href="/admin/admin" class = "item" style="float:left">管理员管理</a>
+        <a href="/admin/category" class = "item" style="float:left">版块管理</a>
+        <!-- <a href="/admin/secure" class = "item" style="float:left">安全管理</a>
+        <a href="/admin/statistic" class = "item" style="float:left">统计信息</a> -->
     </div>
     <div v-show="!isLogin" align="right"> 
         <a href="user-login" class = "item">登陆</a>
     </div>
     <div v-show="isLogin"  align="right">
-        <span class = "item">{{ adminName }}</span>
+        <span class = "item">{{ userName }}</span>
         <a href="/" class = "item" @click="logout">登出</a>
     </div>
   </div>
@@ -21,17 +21,17 @@
 export default {
   name: 'AdminBar',
   created(){
-    this.$store.commit("admin_init");
+    this.$store.commit("init");
   },
   computed: {
     isLogin() {
-        return this.$store.getters.isAdminLogin;
+        return this.$store.getters.isLogin;
     },
-    adminName(){
-      return this.$store.getters.adminname;
+    userName(){
+      return this.$store.getters.username;
     },
-    adminId() {
-      return this.$store.getters.adminID;
+    userId() {
+      return this.$store.getters.userID;
     }
   },
   methods: {

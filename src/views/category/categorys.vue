@@ -13,6 +13,7 @@
                     :id="category1.id"
                     :name="category1.name"
                     :categoryer="category1.categoryer"
+                    :categoryerId="category1.categoryerid"
                     :speak="category1.speak"
                     :follow="category1.follow">
                   </CategoryBlock>
@@ -23,6 +24,7 @@
                     :id="category2.id"
                     :name="category2.name"
                     :categoryer="category2.categoryer"
+                    :categoryerId="category2.categoryerid"
                     :speak="category2.speak"
                     :follow="category2.follow">
                   </CategoryBlock>

@@ -20,7 +20,7 @@ import 'markdown-it-vue/dist/markdown-it-vue.css'
     },
     data() {
       return {
-        about: '# 管理页面 \r\n 你可以联系管理员为你开通帐号'
+        about: '# 管理页面 \r\n 如果没有权限,你可以联系其他管理员'
       }
     },
     created() {

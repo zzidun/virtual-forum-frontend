@@ -44,7 +44,6 @@
                     </div>
                 </el-dialog>
 
-
                 <el-dialog title="设置wiki帖" :visible.sync="setWikiVisible">
                     <el-form :model="wikiForm">
                         <el-form-item label="帖子id" :label-width="formLabelWidth">
@@ -151,7 +150,8 @@ import PostBlock from "@/components/post/block.vue"
       submit() {
         this.$axios({
           method: "post",
-          url: "/posts",data: JSON.stringify({
+          url: "/posts",
+          data: JSON.stringify({
             categoryid: this.categoryId,
             title: this.postForm.title,
             userid : this.$store.getters.userID

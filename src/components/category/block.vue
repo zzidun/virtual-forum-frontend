@@ -1,17 +1,17 @@
 <template>
   <el-container class="category-block grid">
     <el-header>
-        <div>
-            <a class = "text category-name" :href="`/category/`+id" target="_blank" >{{name}}</a>
-            <br/>
-            <span class = "text categoryer-name" >版主: {{categoryer}}</span>
+        <div align="center">
+            <a class = "text category-name" :href="'/category/'+id" target="_blank" >{{name}}</a>
         </div>
-
     </el-header>
     <el-main>
+        <div align="center">
+            <a class = "text categoryer-name" :href="'/user/'+categoryerId">版主: {{categoryer}}</a>
+        </div>
     </el-main>
     <el-footer>
-        <div class = "desc-number">
+        <div class = "desc-number" align="center">
             <span class="category-color"  :style="{backgroundColor : speakColor}"></span>
             <span class="speak text">发言数量: {{speak}}</span>
             <br/>
@@ -31,7 +31,8 @@ export default {
     name : String,
     speak : String,
     follow : String,
-    categoryer : String
+    categoryer : String,
+    categoryerId : String
   },
   data() {
     return { 
