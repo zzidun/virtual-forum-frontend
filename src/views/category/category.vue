@@ -25,21 +25,38 @@
             </div>
 
             <div class="browse-bar">
-                <a href="'/category/'+categoryId" class = "category-item text">看贴</a>
-                <a href="'/post/'+wiki" class = "category-item text">Wiki</a>
-                <a href="javascript:void(0)" class = "category-item text" style="float:right" @click="dialogFormVisible = true" >发帖</a>
+                <a :href="'/category/'+categoryId" class = "category-item text">看帖</a>
+                <a :href="'/post/'+wiki" class = "category-item text">Wiki</a>
+                <a v-if="!isFollowed" href="javascript:void(0)" class = "category-item text" @click="followCategory">关注</a>
+                <a v-if="isFollowed" href="javascript:void(0)" class = "category-item text" @click="unfollowCategory">取消关注</a>
+                <a href="javascript:void(0)" class = "category-item text" style="float:right" @click="postPostVisible = true" >发帖</a>
+                <a href="javascript:void(0)" class = "category-item text" style="float:right" @click="setWikiVisible = true" >设置wiki</a>
 
-                <el-dialog title="发布新贴" :visible.sync="dialogFormVisible">
-                <el-form :model="postForm">
-                    <el-form-item label="帖子标题" :label-width="formLabelWidth">
-                    <el-input v-model="postForm.title" autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="dialogFormVisible = false; submit()">确 定</el-button>
-                </div>
+                <el-dialog title="发布新帖" :visible.sync="postPostVisible">
+                    <el-form :model="postForm">
+                        <el-form-item label="帖子标题" :label-width="formLabelWidth">
+                        <el-input v-model="postForm.title" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="postPostVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="postPostVisible = false; submit()">确 定</el-button>
+                    </div>
                 </el-dialog>
+
+
+                <el-dialog title="设置wiki帖" :visible.sync="setWikiVisible">
+                    <el-form :model="wikiForm">
+                        <el-form-item label="帖子id" :label-width="formLabelWidth">
+                            <el-input v-model="wikiForm.postId" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="setWikiVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="setWikiVisible = false; setWiki()">确 定</el-button>
+                    </div>
+                </el-dialog>
+
             </div>
 
 
@@ -48,6 +65,8 @@
                 <tr v-for="post in postList" :key="post.id">
                     <td :width = "colWidth">
                     <PostBlock
+                        :postTime="post.ctime"
+                        :replyTime="post.utime"
                         :postId="post.id"
                         :postTitle="post.title"
                         :postSpeak="post.speak"
@@ -63,6 +82,7 @@
 
                 <div class="block" align="center">
                     <el-pagination
+                        @current-change="pageChange"
                         layout="prev, pager, next"
                         :total="postTot"
                         :page-size="16">
@@ -91,7 +111,10 @@ import PostBlock from "@/components/post/block.vue"
     },
     data() {
       return {
-        dialogFormVisible : false,
+        curPage : 1,
+        followed : false,
+        setWikiVisible : false,
+        postPostVisible : false,
         categoryId : 0,
         categoryName : "",
         categorySpeak : "0",
@@ -103,9 +126,15 @@ import PostBlock from "@/components/post/block.vue"
         postForm : {
           title: '',
         },
+        wikiForm : {
+          postId: '',
+        },
         rules: {
           title: [
             { required: true, message: '请输入标题', trigger: 'blur' }
+          ],
+          postId: [
+            { required: true, message: '请输入帖子id', trigger: 'blur' }
           ],
         }
       }
@@ -115,6 +144,10 @@ import PostBlock from "@/components/post/block.vue"
       this.getPostList()
     },
     methods: {
+        pageChange(val) {
+            this.curPage = val;
+            this.getPostList();
+        },
       submit() {
         this.$axios({
           method: "post",
@@ -131,13 +164,45 @@ import PostBlock from "@/components/post/block.vue"
                 title: '发布成功',
                 message: h('i', { style: 'color: teal'}, '可能需要刷新才出现')
             });
+            this.getCategory()
+            this.getPostList()
           } else {
             const h = this.$createElement;
             this.$notify({
                 title: '发布失败',
                 message: h('i', { style: 'color: teal'}, '请检查网络和登陆状态')
             });
+            this.getCategory()
+            this.getPostList()
+          }
+        }).catch((error)=>{
+          console.log(error)
+        })
+      },
+      setWiki() {
+        this.$axios({
+          method: "post",
+          url: "/wiki",data: JSON.stringify({
+            categoryid: this.categoryId,
+            postid : this.wikiForm.postId
+          })
+        }).then((res)=>{
+          console.log(res.data)
+          if (res.code == 1000) {
+            const h = this.$createElement;
+            this.$notify({
+                title: '设置成功',
+                message: h('i', { style: 'color: teal'}, '可能需要刷新才出现')
+            });
+            this.getCategory()
+          } else {
+            const h = this.$createElement;
+            this.$notify({
+                title: '设置失败',
+                message: h('i', { style: 'color: teal'}, '请确认权限和帖子id正确')
+            });
             console.log(res.msg)
+            this.getCategory()
           }
         }).catch((error)=>{
           console.log(error)
@@ -151,11 +216,17 @@ import PostBlock from "@/components/post/block.vue"
           console.log(res.data, 222);
           this.categoryId = this.$route.params.id;
           if (res.code == 1000) {
+            this.followed = res.data.followed;
             this.categoryName = res.data.name;
             this.categorySpeak = res.data.speak;
             this.categoryFollow = res.data.follow;
             this.wiki = res.data.wiki;
           } else {
+            const h = this.$createElement;
+            this.$notify({
+              title: '访问失败',
+              message: h('i', { style: 'color: teal'}, '这个版块不存在哦')
+            });
             console.log(res.msg);
           }
         }).catch(err => {
@@ -168,8 +239,8 @@ import PostBlock from "@/components/post/block.vue"
           url: "/posts",
           params: {
             category: this.$route.params.id,
-            left: 0,
-            right: 15,
+            left: (this.curPage - 1) * 16,
+            right: (this.curPage) * 16,
           }
         }).then(res => {
           console.log(res.data, 222);
@@ -183,7 +254,64 @@ import PostBlock from "@/components/post/block.vue"
         }).catch(err => {
           console.log(err)
         })
-      }
+      },
+      followCategory() {
+        this.$axios({
+          method: "post",
+          url: "/follows",
+          params: {
+            category: this.$route.params.id,
+          }
+        }).then(res => {
+          console.log(res.data, 222);
+          if (res.code == 1000) {
+            const h = this.$createElement;
+            this.$notify({
+              title: '关注成功',
+              message: h('i', { style: 'color: teal'}, '关注成功')
+            });
+            console.log(res.msg);
+            this.getCategory();
+          } else {
+            const h = this.$createElement;
+            this.$notify({
+              title: '关注失败',
+              message: h('i', { style: 'color: teal'}, '可能没登陆或者版块不存在')
+            });
+            console.log(res.msg);
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      unfollowCategory() {
+        this.$axios({
+          method: "delete",
+          url: "/follows/" + this.followed
+        }).then(res => {
+          console.log(res.data, 222);
+          if (res.code == 1000) {
+            const h = this.$createElement;
+            this.$notify({
+              title: '取关成功',
+              message: h('i', { style: 'color: teal'}, '取关成功')
+            });
+            console.log(res.msg);
+            this.getCategory();
+          } else {
+            const h = this.$createElement;
+            this.$notify({
+              title: '操作失败',
+              message: h('i', { style: 'color: teal'}, '可能没登陆或者版块不存在')
+            });
+            console.log(res.msg);
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+
+      },
+      
     },
     computed: {
       tableHeight: function() {
@@ -200,6 +328,9 @@ import PostBlock from "@/components/post/block.vue"
       },
       followColor() {
         return this.getColor(this.categoryFollow, 30);
+      },
+      isFollowed() {
+          return this.followed != "0";
       }
     }
     

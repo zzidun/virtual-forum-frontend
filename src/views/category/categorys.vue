@@ -76,7 +76,7 @@ import CategoryBlock from "@/components/category/block.vue"
           url: "/categories",
           params: {
             left: (this.curPage-1)*16,
-            right: (this.curPage-1)*16 + 15,
+            right: (this.curPage)*16,
           }
         }).then(res => {
           console.log(res.data, 222);

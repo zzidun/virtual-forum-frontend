@@ -17,7 +17,10 @@
 
         <el-footer>
           <div>
-            <a href="" class = "comment-item text" style="float:right">删除</a>
+            <br/>
+            <a href="javascript:void(0)" class = "comment-item text" style="float:right" @click="deleteComment">删除</a>
+            <span class="time">{{number}}楼</span>
+            <span class="time">回复时间: {{commentTime}}</span>            
           </div>
         </el-footer>
     </el-container>
@@ -35,28 +38,53 @@ import UserAsideBlock from "@/components/user/asideBlock.vue"
             MarkdownItVue
         },
         props: {
-            commentId : String,
-            commentContent : String,
-            conmentReply : String,
-            userId : String,
-            userName : String,
-            userSpeak : String,
-            userCount : String,
+          number : String,
+          commentTime: String,
+          commentId : String,
+          commentContent : String,
+          conmentReply : String,
+          userId : String,
+          userName : String,
+          userSpeak : String,
+          userCount : String,
+          refreshPost : {
+            type : Function
+          }
         },
         data() {
           return {
-            commentId : "",
             content : this.commentContent,
-            commentContent : "",
-            conmentReply : "",
-            userId : "",
-            userName : "",
-            userSpeak : "",
-            userCount : "",
           }
         },
         computed : {
         },
+        methods : {
+          deleteComment() {
+            this.$axios({
+              method: "delete",
+              url: "/comments/" + this.commentId,
+            }).then(res => {
+              console.log(res.data, 222);
+              if (res.code == 1000) {
+                const h = this.$createElement;
+                this.$notify({
+                  title: '删除成功',
+                  message: h('i', { style: 'color: teal'}, '刷新后无法再访问')
+                });
+                this.refreshPost()
+              } else {
+                const h = this.$createElement;
+                this.$notify({
+                  title: '删除失败',
+                  message: h('i', { style: 'color: teal'}, '你可能没有删除权限')
+                });
+                console.log(res.msg);
+              }
+            }).catch(err => {
+              console.log(err)
+            })
+        }
+    }
     }
 </script>
 
@@ -77,6 +105,11 @@ import UserAsideBlock from "@/components/user/asideBlock.vue"
     margin-right:10px;
     margin-left:10px;
     text-decoration:none;
+}
+
+.time {
+  font-size: 12px;
+  font-weight:lighter;
 }
 
 </style>

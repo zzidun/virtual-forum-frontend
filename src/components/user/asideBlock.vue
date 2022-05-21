@@ -29,10 +29,6 @@ export default {
   },
     data() {
         return {
-            userId : "",
-            userName : "",
-            userSpeak : "",
-            userCount : "",
         };
     },
   computed : {

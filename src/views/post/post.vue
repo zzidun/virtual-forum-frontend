@@ -24,15 +24,29 @@
 
             <div class="browse-bar">
                 <a href="'/post/'+id" class = "post-item text">第一页</a>
-                <a href="" class = "post-item text" style="float:right">删贴</a>
+                <a href="javascript:void(0)" class = "post-item text" style="float:right" @click="deletePostVisible = true">删帖</a>
+
+                <el-dialog title="删除此帖" :visible.sync="deletePostVisible">
+                <el-form :model="postForm">
+                    <el-form-item label="确定删除这个帖子吗(回复也都会消失)" :label-width="formLabelWidth">
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="deletePostVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="deletePostVisible = false; deletePost()">确 定</el-button>
+                </div>
+                </el-dialog>
             </div>
           <div>
 
 
             <table cellspacing="0" cellpadding="0" width = "100%">
-              <tr v-for="comment in commentList" :key="comment.id">
+              <tr v-for="(comment, i) in commentList" :key="i">
                 <td :width = "colWidth">
                   <CommentBlock
+                    :number="(curPage - 1) * 16 + i + 1"
+                    :refreshPost="refreshPost"
+                    :commentTime="comment.ctime"
                     :commentId="comment.id"
                     :commentContent="comment.content"
                     :commentReply="comment.replyid"
@@ -58,14 +72,12 @@
             
             <div>
                 <CommentEditor
-                    :postId="postId">
+                    :postId="postId"
+                    :refreshPost="refreshPost">
                 </CommentEditor>
             </div>
 
           </div>
-
-          
-          
         </td>
         <td class="aside grid"></td>
       </tr>
@@ -85,6 +97,7 @@ import CommentEditor from '@/components/comment/editor.vue'
     },
     data() {
       return {
+        deletePostVisible : false,
         curPage : 1,
         postId : "0",
         postTitle : "",
@@ -103,6 +116,38 @@ import CommentEditor from '@/components/comment/editor.vue'
         this.curPage = val;
         this.getCommentList();
       },
+      deletePost() {
+        this.$axios({
+          method: "delete",
+          url: "/posts/" + this.$route.params.id,
+        }).then(res => {
+          console.log(res.data, 222);
+          this.postId = this.$route.params.id;
+          if (res.code == 1000) {
+            const h = this.$createElement;
+            this.$notify({
+              title: '删除成功',
+              message: h('i', { style: 'color: teal'}, '刷新后无法再访问')
+            });
+            this.getPost()
+            this.getCommentList()
+          } else {
+            const h = this.$createElement;
+            this.$notify({
+              title: '删除失败',
+              message: h('i', { style: 'color: teal'}, '你可能没有删除权限')
+            });
+            this.getPost()
+            this.getCommentList()
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      refreshPost() {
+        this.getPost()
+        this.getCommentList()
+      },
       getPost() {
         this.$axios({
           method: "get",
@@ -114,6 +159,11 @@ import CommentEditor from '@/components/comment/editor.vue'
             this.postTitle = res.data.title;
             this.postSpeak = res.data.speak;
           } else {
+            const h = this.$createElement;
+            this.$notify({
+              title: '访问失败',
+              message: h('i', { style: 'color: teal'}, '这个帖子不存在哦')
+            });
             console.log(res.msg);
           }
         }).catch(err => {
@@ -127,7 +177,7 @@ import CommentEditor from '@/components/comment/editor.vue'
           params: {
             post: this.$route.params.id,
             left: (this.curPage-1)*16,
-            right: (this.curPage-1)*16 + 15,
+            right: (this.curPage)*16,
           }
         }).then(res => {
           console.log(res.data, 222);

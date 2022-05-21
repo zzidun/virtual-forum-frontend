@@ -18,10 +18,12 @@
         },
         props: {
             postId : String,
+            refreshPost : {
+                type: Function
+            }
         },
         data() {
             return {
-                postId : "",
                 text: '',
             };
         },
@@ -45,13 +47,15 @@
                             title: '发表成功',
                             message: h('i', { style: 'color: teal'}, '可能刷新后才出现')
                         });
+                        this.refreshPost()
+                        this.text = ""
                     } else {
                         const h = this.$createElement;
                         this.$notify({
                             title: '发布失败',
                             message: h('i', { style: 'color: teal'}, '请先登陆和检查网络')
                         });
-                        console.log(res.msg)
+                        this.refreshPost()
                     }
                 }).catch((error)=>{
                     console.log(error)

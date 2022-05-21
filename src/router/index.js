@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -21,7 +20,7 @@ const routes = [
     component: ()=>import('@/views/user/register.vue')
   },
   {
-    path: '/user',
+    path: '/user/:id',
     name: 'User',
     component: ()=>import('@/views/user/user.vue')
   },
@@ -40,26 +39,17 @@ const routes = [
     name: 'Post',
     component: ()=>import('@/views/post/post.vue')
   },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: ()=>import('@/views/404.vue')
+  }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
-
-router.beforeEach((to, from, next) => {
-  // 判断是否需要登陆
-  if (to.meta.auth) {
-    // 判断用户是否登陆
-    if (store.state.user_store.token) {
-      next()
-    } else {
-      router.push({name : '/user-login'});
-    }
-  } else {
-    next();
-  }
 })
 
 export default router

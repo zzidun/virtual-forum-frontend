@@ -14,10 +14,14 @@
         <el-main>
             <div>
                 <a class = "text post-name" :href="`/post/`+postId" target="_blank" >{{postTitle}}</a>
+                <br/>
             </div>
         </el-main>
         <el-footer>
-            <span class="post-color"  :style="{backgroundColor : postColor}"></span>
+            <span class="time">发布时间: {{postTime}}</span>
+            <br/>
+            <span class="time">最后回复: {{replyTime}}</span>
+            <span class="post-color" :style="{backgroundColor : postColor}"></span>
             <span class="speak text">回复数: {{postSpeak}}</span>
         </el-footer>
     </el-container>
@@ -32,6 +36,8 @@ import UserAsideBlock from "@/components/user/asideBlock.vue"
             UserAsideBlock
         },
         props: {
+            postTime : String,
+            replyTime : String,
             postId : String,
             postTitle : String,
             postSpeak : String,
@@ -42,13 +48,6 @@ import UserAsideBlock from "@/components/user/asideBlock.vue"
         },
         data() {
             return {
-                postId : "",
-                postTitle : "",
-                postSpeak : "",
-                userId : "",
-                userName : "",
-                userSpeak : "",
-                userCount : "",
             };
         },
         computed : {
@@ -86,4 +85,9 @@ import UserAsideBlock from "@/components/user/asideBlock.vue"
     border-radius: 50%;
 }
 
+.time {
+    font-size: 12px;
+    font-weight:lighter;
+    float:right;
+}
 </style>

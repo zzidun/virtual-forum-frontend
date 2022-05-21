@@ -62,8 +62,8 @@
             this.$store.commit("login", res.data);
             const h = this.$createElement;
             this.$notify({
-            title: '登陆成功',
-            message: h('i', { style: 'color: teal'}, '欢迎使用')
+              title: '登陆成功',
+              message: h('i', { style: 'color: teal'}, '欢迎使用')
             });
             this.$router.push({path: this.redirect || '/' })
           } else {

@@ -35,11 +35,6 @@ export default {
   },
   data() {
     return { 
-        id : "",
-        name : "",
-        speak : "",
-        follow : "",
-        categoryer : "",
     }
   },
   computed : {
