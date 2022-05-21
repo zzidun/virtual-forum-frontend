@@ -17,6 +17,9 @@ import '@kangc/v-md-editor/lib/theme/style/github.css';
 // highlightjs
 import hljs from 'highlight.js';
 
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+
 VMdEditor.use(githubTheme, {
   Hljs: hljs,
 });

@@ -18,6 +18,10 @@
         <el-footer>
           <div>
             <br/>
+            <a href="javascript:void(0)" class = "comment-item text" style="float:right" 
+              v-clipboard:copy="commentContent"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError">复制</a>
             <a href="javascript:void(0)" class = "comment-item text" style="float:right" @click="deleteComment">删除</a>
             <span class="time">{{number}}楼</span>
             <span class="time">回复时间: {{commentTime}}</span>            
@@ -59,6 +63,17 @@ import UserAsideBlock from "@/components/user/asideBlock.vue"
         computed : {
         },
         methods : {
+          copyComment() {
+
+          },// 复制成功时的回调函数
+          onCopy (e) {
+          this.$message.success("内容已复制到剪切板！")
+          },
+          // 复制失败时的回调函数
+          onError (e) {
+          this.$message.error("抱歉，复制失败！")
+          },
+
           deleteComment() {
             this.$axios({
               method: "delete",

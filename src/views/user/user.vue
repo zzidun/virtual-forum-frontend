@@ -8,6 +8,7 @@
               <el-main>
                 <div align="center">
                   <span class = "text user-name" >{{userName}}</span>
+                  <span class = "text user-signal" >{{userSignal}}</span>
                 </div>
               </el-main>
               <el-footer>
@@ -43,6 +44,7 @@
         userId : "0",
         userName : "",
         userSpeak : "",
+        userSignal : "",
         lastLoginIpv4 : "",
         lastLoginTime: ""
       }
@@ -62,8 +64,9 @@
             this.shielded = res.data.shielded;
             this.userName = res.data.name;
             this.userSpeak = res.data.speak;
-            this.lastLoginIpv4 = res.data.lastloginipv4;
-            this.lastLoginTime = res.data.lastlogintime;
+            this.userSignal = res.data.signal;
+            this.lastLoginIpv4 = res.data.lastip;
+            this.lastLoginTime = res.data.lasttime;
           } else {
             const h = this.$createElement;
             this.$notify({
@@ -107,7 +110,7 @@
       unshieldUser() {        
         this.$axios({
           method: "delete",
-          url: "/shields/" + this.followed,
+          url: "/shields/" + this.shielded,
         }).then(res => {
           console.log(res.data, 222);
           if (res.code == 1000) {
@@ -157,4 +160,11 @@
     font-weight:bold;
     text-decoration:none;
 }
+
+.user-name {
+    font-size: 24px;
+    font-weight:bold;
+    text-decoration:none;
+}
+
 </style>

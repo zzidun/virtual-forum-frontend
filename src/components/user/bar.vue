@@ -9,7 +9,7 @@
         <a href="user-register" class = "item">注册</a>
     </div>
     <div v-show="isLogin"  align="right">
-        <a href="user" class = "item">{{ userName }}</a>
+        <a :href="`user/`+userId" class = "item">{{ userName }}</a>
         <a href="/" class = "item" @click="logout">登出</a>
     </div>
   </div>
@@ -28,6 +28,10 @@ export default {
     userName(){
       console.log(this.$store.getters.username);
       return this.$store.getters.username;
+    },
+    userId() {
+      console.log(this.$store.getters.username);
+      return this.$store.getters.userID;
     }
   },
   methods: {
