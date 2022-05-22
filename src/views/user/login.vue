@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import bcrypt from "bcryptjs"
   export default {
     name: "UserLogin",
     data() {

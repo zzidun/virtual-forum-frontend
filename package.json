@@ -9,6 +9,7 @@
   "dependencies": {
     "@kangc/v-md-editor": "^1.7.11",
     "axios": "^0.24.0",
+    "bcryptjs": "^2.4.3",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.6",
     "markdown-it-vue": "^1.1.7",

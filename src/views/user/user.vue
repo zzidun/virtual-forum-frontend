@@ -8,6 +8,7 @@
               <el-main>
                 <div align="center">
                   <span class = "text user-name" >{{userName}}</span>
+                  <br/>
                   <span class = "text user-signal" >{{userSignal}}</span>
                 </div>
               </el-main>
@@ -22,10 +23,40 @@
               </el-footer>
             </el-container>
 
-            <div class="browse-bar" align="center">
+            <div class="browse-bar" align="center" v-if="otherUser">
               <el-button v-if="!isShield" type="primary" @click="shieldUser">屏蔽他</el-button>
               <el-button v-if="isShield" type="primary" @click="unshieldUser">重新认识他</el-button>
             </div>
+
+            <div class="browse-bar" align="center" v-if="!otherUser">
+              <el-button v-if="!isShield" type="primary" @click="editUserVisible = true">修改用户信息</el-button>
+
+                <el-dialog title="设置管理员权限" :visible.sync="editUserVisible">
+                  <el-form :model="userForm">
+                      <el-form-item label="简介" >
+                          <el-input v-model="userForm.signal" autocomplete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item label="新邮箱" >
+                          <el-input v-model="userForm.email" autocomplete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item label="新密码" >
+                          <el-input type="password" v-model="userForm.password" autocomplete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item label="旧邮箱" >
+                          <el-input v-model="userForm.emailOld" autocomplete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item label="旧密码" >
+                          <el-input type="password" v-model="userForm.passwordOld" autocomplete="off"></el-input>
+                      </el-form-item>
+                  </el-form>
+                  <div slot="footer" class="dialog-footer">
+                      <el-button @click="editUserVisible = false">取 消</el-button>
+                      <el-button type="primary" @click="editUserVisible = false; editUser()">确 定</el-button>
+                  </div>
+                </el-dialog>
+
+            </div>
+
           </div>
         </td>
         <td class="aside grid"></td>
@@ -40,19 +71,78 @@
     },
     data() {
       return {
+        editUserVisible : false,
         shielded : "0",
         userId : "0",
         userName : "",
         userSpeak : "",
         userSignal : "",
         lastLoginIpv4 : "",
-        lastLoginTime: ""
+        lastLoginTime: "",
+        userForm : {
+          signal : '',
+          email: '',
+          password : '',
+          emailOld: '',
+          passwordOld: '',
+        },
+        rules : {
+          signal: [
+            { required: true, message: '输入简介', trigger: 'blur' }
+          ],
+          email: [
+            { required: true, message: '输入新邮箱', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '输入新密码', trigger: 'blur' }
+          ],
+          emailOld: [
+            { required: true, message: '输入旧邮箱', trigger: 'blur' }
+          ],
+          passwordOld: [
+            { required: true, message: '输入旧密码', trigger: 'blur' }
+          ],
+        }
       }
     },
     mounted: function() {
       this.getUser()
     },
     methods: {
+      editUser() {
+        this.$axios({
+          method: "put",
+          url: "/users/" + this.userId,
+            data: JSON.stringify({
+                email: this.userForm.email,
+                password : this.userForm.password,
+                emailold : this.userForm.emailOld,
+                passwordold : this.userForm.passwordOld,
+                signal : this.userForm.signal,
+            })
+        }).then(res => {
+          if (res.code == 1000) {
+            const h = this.$createElement;
+            this.$notify({
+                title: '设置成功',
+                message: h('i', { style: 'color: teal'}, '刷新后显示')
+            });
+            this.refreshPage()
+          } else {
+            const h = this.$createElement;
+            this.$notify({
+                title: '设置失败',
+                message: h('i', { style: 'color: teal'}, '请检查你的权限')
+            });
+            console.log(res.msg);
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      refreshPage() {
+        this.getUser()
+      },
       getUser() {
         this.$axios({
           method: "get",
@@ -141,6 +231,9 @@
       },
       isShield : function() {
         return this.shielded != "0"
+      },
+      otherUser: function() {
+        return this.$route.params.id !=  this.$store.getters.userID
       }
     }
     
