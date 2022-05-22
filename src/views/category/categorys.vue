@@ -7,7 +7,8 @@
             <div>
 
             <table cellspacing="0" cellpadding="0" width = "100%">
-              <tr v-for="(category1, category2) in categoryList" :key="category1.id">
+              <tr v-for="{category1, category2} in categoryList" :key="category1.index">
+
                 <td :height = "rowHeight" :width = "colWidth">
                   <CategoryBlock
                     :id="category1.id"
@@ -20,7 +21,7 @@
                 </td>
 
                 <td :height = "rowHeight" :width = "colWidth">
-                  <CategoryBlock v-if="!category2.id == 0"
+                  <CategoryBlock v-if="!category2 == ''"
                     :id="category2.id"
                     :name="category2.name"
                     :categoryer="category2.categoryer"
@@ -85,7 +86,18 @@ import CategoryBlock from "@/components/category/block.vue"
           if (res.code == 1000) {
             this.categoryTot = Number(res.data.tot);
             this.categoryCur = Number(res.data.cur);
-            this.categoryList = res.data.list;
+
+            for (var index = 0; index < res.data.tot; index+=2) {
+              var category1 = res.data.list[index]
+              var category2 = ""
+              if (index + 1 != res.data.tot) {
+                category2 = res.data.list[index+1]
+              }
+              this.categoryList.push({category1, category2})
+            }
+
+            console.log(this.categoryList)
+
           } else {
             console.log(res.msg);
           }
