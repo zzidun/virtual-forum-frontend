@@ -32,6 +32,14 @@
                 </td>
 
               </tr>
+
+              <tr v-if="categoryCur == 0">
+                    <td :width = "colWidth">
+                        <NotFoundBlock>
+                        </NotFoundBlock>
+                    </td>
+                </tr>
+
             </table> 
             </div>
 
@@ -52,16 +60,18 @@
 
 <script>
 import CategoryBlock from "@/components/category/block.vue"
+import NotFoundBlock from  "@/components/404.vue"
   export default {
     name: "Categorys",
     components: {
-      CategoryBlock
+      CategoryBlock,
+        NotFoundBlock
     },
     data() {
       return {
         curPage : 1,
         categoryTot : 0,
-        categoryCur : 16,
+        categoryCur : 0,
         categoryList: []
       }
     },

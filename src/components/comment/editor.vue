@@ -2,7 +2,7 @@
   <el-container class="post-block grid">
     <el-container class = "gird">
         <el-main>
-          <v-md-editor v-model="text" height="200px"></v-md-editor>
+          <v-md-editor v-model="text" height="350px"></v-md-editor>
         </el-main>
         <el-footer>
             <el-button type="primary" @click="submit">回复</el-button>

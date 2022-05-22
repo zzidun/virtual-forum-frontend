@@ -11,10 +11,10 @@
             <span class="perm-color" :style="{backgroundColor : adminPermColor}"> </span>
             <span class="text"> 管理员管理权限: {{adminPerm}}</span>
             <br/>
-
+<!-- 
             <span class="perm-color" :style="{backgroundColor : banPermColor}"> </span>
             <span class="text"> 安全管理权限: {{banPerm}}</span>
-            <br/>
+            <br/> -->
 
             <span class="perm-color" :style="{backgroundColor : categoryPermColor}"> </span>
             <span class="text"> 版块管理权限: {{categoryPerm}}</span>
@@ -31,9 +31,9 @@
                     <el-form-item label="管理员管理权限" >
                         <el-input v-model="adminForm.adminPermInput" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="安全管理权限" >
+                    <!-- <el-form-item label="安全管理权限" >
                         <el-input v-model="adminForm.banPermInput" autocomplete="off"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item label="版块管理权限" >
                         <el-input v-model="adminForm.categoryPermInput" autocomplete="off"></el-input>
                     </el-form-item>
@@ -69,16 +69,16 @@ export default {
         setPermVisible : false,
         adminForm : {
             adminPermInput: '',
-            banPermInput: '',
+            // banPermInput: '',
             categoryPermInput: '',
         },
         rules : {
           adminPermInput: [
             { required: true, message: '输入新权限', trigger: 'blur' }
           ],
-          banPermInput: [
-            { required: true, message: '输入新权限', trigger: 'blur' }
-          ],
+        //   banPermInput: [
+        //     { required: true, message: '输入新权限', trigger: 'blur' }
+        //   ],
           categoryPermInput: [
             { required: true, message: '输入新权限', trigger: 'blur' }
           ],
@@ -136,9 +136,9 @@ export default {
           url: "/admins/" + this.userId,
             data: JSON.stringify({
                 userid: this.userId,
-                adminperm : this.adminForm.banPermInput,
-                banperm : this.adminForm.banPermInput,
-                categoryperm : this.adminForm.adminPermInput,
+                adminperm : this.adminForm.adminPermInput,
+                banperm : "",
+                categoryperm : this.adminForm.categoryPermInput,
             })
         }).then(res => {
           if (res.code == 1000) {

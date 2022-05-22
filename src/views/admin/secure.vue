@@ -74,7 +74,7 @@ import SecureBlock from "@/components/admin/secure/block.vue"
         createAdminVisible : false,
         curPage : 1,
         adminTot : 0,
-        adminCur : 16,
+        adminCur : 0,
         adminList: [],
         adminForm : {
           userId: '',

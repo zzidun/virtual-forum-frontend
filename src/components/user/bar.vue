@@ -5,11 +5,11 @@
         <a href="/categorys" class = "item" style="float:left;">版块</a>
     </div>
     <div v-show="!isLogin" align="right"> 
-        <a href="user-login" class = "item" style="">登陆</a>
-        <a href="user-register" class = "item" style="">注册</a>
+        <a href="/user-login" class = "item" style="">登陆</a>
+        <a href="/user-register" class = "item" style="">注册</a>
     </div>
     <div v-show="isLogin"  align="right">
-        <a :href="`user/`+userId" class = "item" style="">{{ userName }}</a>
+        <a :href="'/user/'+userId" class = "item" style="">{{ userName }}</a>
         <a href="/" class = "item" @click="logout" style="">登出</a>
     </div>
   </div>

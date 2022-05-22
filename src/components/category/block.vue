@@ -7,7 +7,7 @@
     </el-header>
     <el-main>
         <div align="center">
-            <a class = "text categoryer-name" :href="'/user/'+categoryerId">版主: {{categoryer}}</a>
+            <a class = "text categoryer-name" :href="'/user/'+categoryerId" target="_blank">版主: {{categoryer}}</a>
         </div>
     </el-main>
     <el-footer>

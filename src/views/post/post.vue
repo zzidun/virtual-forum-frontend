@@ -23,7 +23,7 @@
             </div>
 
             <div class="browse-bar">
-                <a href="'/post/'+id" class = "post-item text">第一页</a>
+                <a :href="'/category/'+categoryId" class = "post-item text" target="_blank" >看帖</a>
                 <a href="javascript:void(0)" class = "post-item text" style="float:right" @click="deletePostVisible = true">删帖</a>
 
                 <el-dialog title="删除此帖" :visible.sync="deletePostVisible">
@@ -58,6 +58,12 @@
                   </CommentBlock>
                 </td>
               </tr>
+                <tr v-if="commentCur == 0">
+                    <td :width = "colWidth">
+                        <NotFoundBlock>
+                        </NotFoundBlock>
+                    </td>
+                </tr>
             </table> 
 
                 <div class="block" align="center">
@@ -87,11 +93,13 @@
 <script>
 import CommentBlock from "@/components/comment/block.vue"
 import CommentEditor from '@/components/comment/editor.vue'
+import NotFoundBlock from  "@/components/404.vue"
   export default {
     name: "Post",
     components: {
         CommentBlock,
-        CommentEditor
+        CommentEditor,
+        NotFoundBlock
     },
     props: {
     },
@@ -99,11 +107,12 @@ import CommentEditor from '@/components/comment/editor.vue'
       return {
         deletePostVisible : false,
         curPage : 1,
+        categoryId : "0",
         postId : "0",
         postTitle : "",
         postSpeak : "0",
         commentTot : 0,
-        commentCur : 16,
+        commentCur : 0,
         commentList: []
       }
     },
@@ -156,6 +165,7 @@ import CommentEditor from '@/components/comment/editor.vue'
           console.log(res.data, 222);
           this.postId = this.$route.params.id;
           if (res.code == 1000) {
+            this.categoryId = res.data.category;
             this.postTitle = res.data.title;
             this.postSpeak = res.data.speak;
           } else {

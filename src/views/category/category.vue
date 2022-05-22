@@ -25,7 +25,8 @@
             </div>
 
             <div class="browse-bar">
-                <a :href="'/category/'+categoryId" class = "category-item text">看帖</a>
+                <a v-if="!isSortReplyTime" href="javascript:void(0)" class = "category-item text"  @click="sortReplyTime = true; getPostList()">按发布时间排序↓</a>
+                <a v-if="isSortReplyTime" href="javascript:void(0)" class = "category-item text" @click="sortReplyTime = false; getPostList()">按回复时间排序↓</a>
                 <a :href="'/post/'+wiki" class = "category-item text">Wiki</a>
                 <a v-if="!isFollowed" href="javascript:void(0)" class = "category-item text" @click="followCategory">关注</a>
                 <a v-if="isFollowed" href="javascript:void(0)" class = "category-item text" @click="unfollowCategory">取消关注</a>
@@ -61,6 +62,7 @@
 
             <div>
                 <table cellspacing="0" cellpadding="0" width = "100%">
+                
                 <tr v-for="post in postList" :key="post.id">
                     <td :width = "colWidth">
                     <PostBlock
@@ -77,6 +79,14 @@
                     </PostBlock>
                     </td>
                 </tr>
+
+                <tr v-if="postCur == 0">
+                    <td :width = "colWidth">
+                        <NotFoundBlock>
+                        </NotFoundBlock>
+                    </td>
+                </tr>
+
                 </table> 
 
                 <div class="block" align="center">
@@ -101,15 +111,18 @@
 
 <script>
 import PostBlock from "@/components/post/block.vue"
+import NotFoundBlock from  "@/components/404.vue"
   export default {
     name: "Category",
     components: {
-      PostBlock
+      PostBlock,
+      NotFoundBlock
     },
     props: {
     },
     data() {
       return {
+        sortReplyTime : false,
         curPage : 1,
         followed : false,
         setWikiVisible : false,
@@ -120,7 +133,7 @@ import PostBlock from "@/components/post/block.vue"
         categoryFollow : "0",
         wiki : "",
         postTot : 0,
-        postCur : 16,
+        postCur : 0,
         postList: [],
         postForm : {
           title: '',
@@ -234,26 +247,49 @@ import PostBlock from "@/components/post/block.vue"
         })
       },
       getPostList() {
-        this.$axios({
-          method: "get",
-          url: "/posts",
-          params: {
-            category: this.$route.params.id,
-            left: (this.curPage - 1) * 16,
-            right: (this.curPage) * 16,
-          }
-        }).then(res => {
-          console.log(res.data, 222);
-          if (res.code == 1000) {
-            this.postTot = Number(res.data.tot);
-            this.postCur = Number(res.data.cur);
-            this.postList = res.data.list;
-          } else {
-            console.log(res.msg);
-          }
-        }).catch(err => {
-          console.log(err)
-        })
+        if (this.sortReplyTime) {
+            this.$axios({
+            method: "get",
+            url: "/posts2",
+            params: {
+                category: this.$route.params.id,
+                left: (this.curPage - 1) * 16,
+                right: (this.curPage) * 16,
+            }
+            }).then(res => {
+            console.log(res.data, 222);
+            if (res.code == 1000) {
+                this.postTot = Number(res.data.tot);
+                this.postCur = Number(res.data.cur);
+                this.postList = res.data.list;
+            } else {
+                console.log(res.msg);
+            }
+            }).catch(err => {
+            console.log(err)
+            })
+        } else {
+            this.$axios({
+            method: "get",
+            url: "/posts",
+            params: {
+                category: this.$route.params.id,
+                left: (this.curPage - 1) * 16,
+                right: (this.curPage) * 16,
+            }
+            }).then(res => {
+            console.log(res.data, 222);
+            if (res.code == 1000) {
+                this.postTot = Number(res.data.tot);
+                this.postCur = Number(res.data.cur);
+                this.postList = res.data.list;
+            } else {
+                console.log(res.msg);
+            }
+            }).catch(err => {
+            console.log(err)
+            })
+        }
       },
       followCategory() {
         this.$axios({
@@ -331,6 +367,9 @@ import PostBlock from "@/components/post/block.vue"
       },
       isFollowed() {
           return this.followed != "0";
+      },
+      isSortReplyTime() {
+          return this.sortReplyTime;
       }
     }
     

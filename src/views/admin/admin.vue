@@ -48,7 +48,13 @@
                     >
                   </AdminBlock>
                 </td>
-              </tr>
+              </tr>                
+              <tr v-if="adminCur == 0">
+                    <td :width = "colWidth">
+                        <NotFoundBlock>
+                        </NotFoundBlock>
+                    </td>
+                </tr>
             </table> 
 
                 <div class="block" align="center">
@@ -69,10 +75,12 @@
 
 <script>
 import AdminBlock from "@/components/admin/admin/block.vue"
+import NotFoundBlock from  "@/components/404.vue"
   export default {
     name: "AdminAdmin",
     components: {
-        AdminBlock
+        AdminBlock,
+        NotFoundBlock
     },
     props: {
     },
@@ -81,7 +89,7 @@ import AdminBlock from "@/components/admin/admin/block.vue"
         createAdminVisible : false,
         curPage : 1,
         adminTot : 0,
-        adminCur : 16,
+        adminCur : 0,
         adminList: [],
         adminForm : {
           userId: '',

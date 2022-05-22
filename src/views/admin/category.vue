@@ -46,6 +46,12 @@
                   </AdminCategoryBlock>
                 </td>
               </tr>
+              <tr v-if="categoryCur == 0">
+                    <td :width = "colWidth">
+                        <NotFoundBlock>
+                        </NotFoundBlock>
+                    </td>
+                </tr>
             </table> 
 
             <div class="block" align="center">
@@ -66,10 +72,12 @@
 
 <script>
 import AdminCategoryBlock from "@/components/admin/category/block.vue"
+import NotFoundBlock from  "@/components/404.vue"
   export default {
     name: "AdminCategory",
     components: {
-        AdminCategoryBlock
+        AdminCategoryBlock,
+        NotFoundBlock
     },
     props: {
     },
@@ -78,7 +86,7 @@ import AdminCategoryBlock from "@/components/admin/category/block.vue"
         createCategoryVisible : false,
         curPage : 1,
         categoryTot : 0,
-        categoryCur : 16,
+        categoryCur : 0,
         categoryList: [],
         categoryForm : {
           categoryName: '',
