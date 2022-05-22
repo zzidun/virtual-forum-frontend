@@ -8,7 +8,7 @@
         <a href="/admin/statistic" class = "item" style="float:left">统计信息</a> -->
     </div>
     <div v-show="!isLogin" align="right"> 
-        <a href="user-login" class = "item">登陆</a>
+        <a href="/user-login" class = "item">登陆</a>
     </div>
     <div v-show="isLogin"  align="right">
         <span class = "item">{{ userName }}</span>
