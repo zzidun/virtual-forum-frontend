@@ -5,8 +5,8 @@
         <td class="main gird" align="center">
           <div class = "form-div">
             <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="100px">
-            <el-form-item label="用户名" prop="name">
-              <el-input v-model="loginForm.name"></el-input>
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="loginForm.email"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
               <el-input type="password" v-model="loginForm.password"></el-input>
@@ -24,18 +24,17 @@
 </template>
 
 <script>
-import bcrypt from "bcryptjs"
   export default {
     name: "UserLogin",
     data() {
       return {
         loginForm: {
-          name: '',
+          email: '',
           password: '',
         },
         rules: {
-          name: [
-            { required: true, message: '请输入用户名', trigger: 'blur' }
+          email: [
+            { required: true, message: '请输入注册时的邮箱', trigger: 'blur' }
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' }
@@ -53,7 +52,7 @@ import bcrypt from "bcryptjs"
           method: 'post',
           url:'/login',
           data: JSON.stringify({
-            name: this.loginForm.name,
+            email: this.loginForm.email,
             password: this.loginForm.password
           })
         }).then((res)=>{

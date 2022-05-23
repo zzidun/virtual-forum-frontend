@@ -42,9 +42,6 @@
                       <el-form-item label="新密码" >
                           <el-input type="password" v-model="userForm.password" autocomplete="off"></el-input>
                       </el-form-item>
-                      <el-form-item label="旧邮箱" >
-                          <el-input v-model="userForm.emailOld" autocomplete="off"></el-input>
-                      </el-form-item>
                       <el-form-item label="旧密码" >
                           <el-input type="password" v-model="userForm.passwordOld" autocomplete="off"></el-input>
                       </el-form-item>
@@ -83,7 +80,6 @@
           signal : '',
           email: '',
           password : '',
-          emailOld: '',
           passwordOld: '',
         },
         rules : {
@@ -95,9 +91,6 @@
           ],
           password: [
             { required: true, message: '输入新密码', trigger: 'blur' }
-          ],
-          emailOld: [
-            { required: true, message: '输入旧邮箱', trigger: 'blur' }
           ],
           passwordOld: [
             { required: true, message: '输入旧密码', trigger: 'blur' }
@@ -116,9 +109,8 @@
             data: JSON.stringify({
                 email: this.userForm.email,
                 password : this.userForm.password,
-                emailold : this.userForm.emailOld,
-                passwordold : this.userForm.passwordOld,
                 signal : this.userForm.signal,
+                passwordold : this.userForm.passwordOld,
             })
         }).then(res => {
           if (res.code == 1000) {
@@ -132,7 +124,7 @@
             const h = this.$createElement;
             this.$notify({
                 title: '设置失败',
-                message: h('i', { style: 'color: teal'}, '请检查你的权限')
+                message: h('i', { style: 'color: teal'}, '请检查你输入的信息')
             });
             console.log(res.msg);
           }
